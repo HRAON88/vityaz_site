@@ -1,0 +1,23 @@
+{% extends 'club/base.html' %}
+{% block content %}
+<h1> {{title}}</h1>
+<ul>
+    {% for p in posts  %}
+    <li><div class="article-panel">
+    <p class="first"></p>
+    <p class="last">Дата: {{p.time_create|date:"d-m-Y H:i:s"}}</p>
+    </div>
+
+
+    <p><img class="img-article-left thumb" src="{{p.photos}}"></p>
+
+                    <h2>{{p.title}}</h2>
+        {% autoescape on%}
+        <p>{{p.content | linebreaks|truncatewords:15}}</p>
+        {% endautoescape %}
+        <div class="clear"></div>
+        <p class="link-read-post"><a href="{{p.get_absolute_url}}">Read the post</a></p>
+    </li>
+    {%endfor%}
+</ul>
+{% endblock %}
