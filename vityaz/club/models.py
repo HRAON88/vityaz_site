@@ -39,3 +39,5 @@ class Schedule(models.Model):
     day_of_week = models.IntegerField()
     start_time = models.TimeField()
     end_time = models.TimeField()
+
+

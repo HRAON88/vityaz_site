@@ -4,13 +4,13 @@ from django.db.models import Count
 from .models import *
 
 
-menu = [{'title': 'о сайте', 'url_name': 'about'},
+menu = [
         {'title': 'расписание', 'url_name': 'schedules'},
         {'title': 'обратная связь', 'url_name': 'contact'}
         ]
 
 class DataMixin:
-    paginate_by = 1
+    paginate_by = 4
     def get_user_context(self, **kwargs):
         context = kwargs
         # cats = cache.get('cats')

@@ -12,6 +12,10 @@ from django.core.paginator import Paginator
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import logout, login
+from django.shortcuts import render
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
 
 
 class ClubHome(DataMixin, ListView):
@@ -22,17 +26,17 @@ class ClubHome(DataMixin, ListView):
     # extra_context = {'title': "Главная страница"}
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title="Главная страница")
+        c_def = self.get_user_context(title="Новости")
         cc = dict(list(context.items()) + list(c_def.items()))
         return cc
     def get_queryset(self):
         return News.objects.all().prefetch_related('photos')
 
-def about(request):
-    return HttpResponse('О сайте')
 
-def schedules(request):
-    return HttpResponse('Расписания')
+def schedule(request):
+    return HttpResponse('Котакты')
+
+
 def contact(request):
     return HttpResponse('Котакты')
 def pageNotFound(request, exception):
@@ -43,7 +47,7 @@ class ShowPost(DataMixin, DetailView):
     model = News
     template_name = 'club/post.html'
     pk_url_kwarg = 'id'
-    context_object_name = 'posts'
+    context_object_name = 'post'
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title=context["post"])

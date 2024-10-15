@@ -9,9 +9,8 @@ from django.views.decorators.cache import cache_page
 
 urlpatterns = [
     path('', ClubHome.as_view(), name='home'),
-    path('about/', about, name='about'),
     path('contact/', contact, name='contact'),
-    path('schedules/', schedules, name='schedules'),
+    path('schedules/', schedule, name='schedules'),
     path('post/<int:id>/', ShowPost.as_view(), name='post'),
 
 

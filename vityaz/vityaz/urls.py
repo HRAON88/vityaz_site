@@ -25,6 +25,7 @@ from django.conf.urls.static import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('club.urls')),
+    path('api-auth/', include('rest_framework.urls'))
 ]
 
 if settings.DEBUG:
