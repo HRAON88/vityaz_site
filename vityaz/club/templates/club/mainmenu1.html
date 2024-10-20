@@ -1,0 +1,76 @@
+{% extends 'club/base.html' %}
+{% block content %}
+{% load static %}
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src="{% static 'club/js/scripts-for-form.js' %}"></script>
+
+<div class="artboard-container">
+    <div class="artboard-element image-element" data-id="1"></div>
+    <div class="artboard-element image-element" data-id="2"></div>
+    <div class="artboard-element image-element" data-id="3"></div>
+
+    <div class="logo-image"></div>
+
+    <div class="button-container">
+        <button class="custom-button" onclick="openForm('trial')">Записаться на пробное занятие</button>
+        <button class="custom-button second-button" onclick="openForm('callback')">Заказать звонок</button>
+    </div>
+
+    {% if message_success %}
+    <div class="success-message">{{ message_success }}</div>
+    {% endif %}
+
+    <div id="overlay" class="overlay" onclick="closeForm()"></div>
+
+    <div id="trial-form-popup" class="form-popup {% if trial_form.errors %}visible{% endif %}">
+        <span class="close-button" onclick="closeForm()">&times;</span>
+        <form method="post" class="form-container" id="trial-form">
+            {% csrf_token %}
+            {{ trial_form.non_field_errors }}
+            {% for field in trial_form %}
+                <div class="form-group">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.errors %}
+                        <div class="error">{{ field.errors }}</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <div class="recaptcha-wrapper">
+                <div class="g-recaptcha" data-sitekey="{{ RECAPTCHA_SITE_KEY }}" data-callback="onRecaptchaSuccess"></div>
+            </div>
+            <button type="submit" name="trial_submit" class="btn" id="submit-btn" disabled>Отправить</button>
+        </form>
+        {% if message and trial_form.errors %}
+            <div class="alert">{{ message }}</div>
+        {% endif %}
+    </div>
+
+    <div id="callback-form-popup" class="form-popup {% if callback_form.errors %}visible{% endif %}">
+        <span class="close-button" onclick="closeForm()">&times;</span>
+        <form method="post" class="form-container" id="callback-form">
+            {% csrf_token %}
+            {{ callback_form.non_field_errors }}
+            {% for field in callback_form %}
+                <div class="form-group">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.errors %}
+                        <div class="error">{{ field.errors }}</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <div class="recaptcha-wrapper">
+                <div class="g-recaptcha" data-sitekey="{{ RECAPTCHA_SITE_KEY }}" data-callback="onRecaptchaSuccess"></div>
+            </div>
+            <button type="submit" name="callback_submit" class="btn" id="submit-btn-callback" disabled>Отправить</button>
+        </form>
+        {% if message and callback_form.errors %}
+            <div class="alert">{{ message }}</div>
+        {% endif %}
+    </div>
+</div>
+
+
+
+{% endblock %}

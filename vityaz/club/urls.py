@@ -5,13 +5,18 @@ from django.contrib import admin
 from vityaz import settings
 from .views import *
 from django.views.decorators.cache import cache_page
+from django.urls import path, include
+from . import views
 
 
 urlpatterns = [
-    path('', ClubHome.as_view(), name='home'),
+    path('', ClubMainMenu.as_view(), name='home'),
+    path('news/', ClubNews.as_view(), name='news'),
     path('contact/', contact, name='contact'),
-    path('schedules/', schedule, name='schedules'),
+    path('schedule/', ScheduleView.as_view(), name='schedule'),
     path('post/<int:id>/', ShowPost.as_view(), name='post'),
+    path('api/schedule/<int:age>/', ScheduleAPIView.as_view(), name='schedule-api'),
+    path('captcha/', include('captcha.urls')),
 
 
 ]

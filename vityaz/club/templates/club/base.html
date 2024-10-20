@@ -7,10 +7,12 @@
     <meta charset="UTF-8">
     <title>{% block title %}Vityaz{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="{% static 'club/css/styles.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'club/css/mainmenu.css' %}" />
     <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
     <link rel="shortcut icon" href="{% static 'club/images/logo.png' %}" type="image/x-icon"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
 
 
 <body>
@@ -22,6 +24,8 @@
             {% endfor %}
         </ul>
     </div>
+
+
 
     <div class="content-text">
         {% block content %}
@@ -60,12 +64,19 @@
         </nav>
         {% endif %}
     </div>
-</body>
 
-<div class="container">
 
-  <footer class="footer"><p>Разработчик Владислав Валерьевич</p></footer>
+
+
+
 </div>
-
-
+</td></tr></table>
+</td></tr>
+<tr><td valign="top">
+    <div id="footer">
+        <p>Разработчик Владислав Валерьевич</p>
+    </div>
+</td></tr></table>
+</body>
+</html>
 

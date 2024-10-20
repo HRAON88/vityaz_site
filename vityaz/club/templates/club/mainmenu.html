@@ -1,0 +1,189 @@
+{% extends 'club/base.html' %}
+{% block content %}
+{% load static %}
+<div class="artboard-container">
+    <div class="artboard-element image-element" data-id="1"></div>
+    <div class="artboard-element image-element" data-id="2"></div>
+    <div class="artboard-element image-element" data-id="3"></div>
+
+    <!-- New Image Div -->
+    <div class="logo-image"></div>
+
+    <div class="button-container">
+        <button class="custom-button" onclick="openForm()">Записаться на пробное занятие</button>
+        <button class="custom-button second-button" onclick="openForm()">Заказать звонок</button>
+    </div>
+    <div id="form-popup" class="form-popup">
+        <form class="form-container">
+            <h2>Записаться</h2>
+            <label for="name"><b>ФИО</b></label>
+            <input type="text" placeholder="Введите ФИО" name="name" required>
+
+            <label for="age"><b>Возраст ребёнка</b></label>
+            <input type="number" placeholder="Введите возраст" name="age" required>
+
+            <label for="phone"><b>Номер телефона</b></label>
+            <input type="tel" placeholder="Введите номер телефона" name="phone" required>
+
+            <button type="submit" class="btn">Отправить</button>
+            <button type="button" class="btn cancel" onclick="closeForm()">Закрыть</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    .artboard-container {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        background-color: #000000;
+        background-size: cover;
+    }
+
+    .artboard-element {
+        position: absolute;
+        box-sizing: border-box;
+        display: table;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .image-element[data-id="1"] {
+        background-image: url("{% static 'club/images/shine2.png' %}");
+        z-index: 1;
+        left: calc(50% - 600px + 503px);
+        width: 1246px;
+        height: 877px;
+        top: -200px;
+    }
+
+    .image-element[data-id="2"] {
+        z-index: 0;
+        top: -184px;
+        left: calc(50% - 600px + -368px);
+        width: 821px;
+        height: 578px;
+        background-image: url("{% static 'club/images/shine1.png' %}");
+    }
+
+    .image-element[data-id="3"] {
+        z-index: 0;
+        top: 450px;
+        left: calc(50% - 0pxpx);
+        width: 901px;
+        height: 700px;
+        background-image: url("{% static 'club/images/shine1.png' %}");
+    }
+
+    .logo-image {
+        position: absolute;
+        top: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 3;
+        width: 800px;
+        height: 800px;
+        background-image: url("{% static 'club/images/vityaz.png' %}");
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+
+    .button-container {
+    position: absolute;
+    bottom: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    z-index: 4;
+}
+
+.custom-button {
+    background-color: #ff0000;
+    color: white;
+    padding: 20px 5px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 400px; /* Установите фиксированную ширину */
+    text-align: center; /* Центрирование текста */
+}
+
+.custom-button:hover {
+    background-color: #cc0000;
+}
+
+.second-button {
+    background-color: #0000ff;
+}
+
+.second-button:hover {
+    background-color: #0000cc;
+}
+
+    .form-popup {
+    display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 3px solid #f1f1f1;
+        z-index: 9;
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    .form-container {
+        max-width: 300px;
+        padding: 10px;
+    }
+
+    .form-container input[type="text"],
+    .form-container input[type="number"],
+    .form-container input[type="tel"] {
+        width: 100%;
+        padding: 10px;
+        margin: 5px 0 20px 0;
+        border: none;
+        background: #f1f1f1;
+        border-radius: 5px;
+    }
+
+    .form-container .btn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        margin-bottom: 10px;
+        opacity: 0.8;
+        border-radius: 5px;
+    }
+
+    .form-container .cancel {
+        background-color: red;
+    }
+
+    .form-container .btn:hover, .open-button:hover {
+        opacity: 1;
+    }
+</style>
+
+<script>
+    function openForm() {
+        document.getElementById("form-popup").style.display = "block";
+    }
+
+    function closeForm() {
+        document.getElementById("form-popup").style.display = "none";
+    }
+</script>
+{% endblock %}

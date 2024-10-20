@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'club.apps.ClubConfig',
     'rest_framework',
+    'captcha',
 ]
 
 MIDDLEWARE = [
@@ -140,3 +141,6 @@ CACHES = {
         "LOCATION": os.path.join(BASE_DIR, 'vityaz_cash')
     }
 }
+
+RECAPTCHA_SITE_KEY = '6LdaxGYqAAAAALeQYaNE9vtvOvidFyjvGKdSB4LO'
+RECAPTCHA_SECRET_KEY = '6LdaxGYqAAAAAAE8ZygU9lfW_KzwlUk-3MrfnwN-'
