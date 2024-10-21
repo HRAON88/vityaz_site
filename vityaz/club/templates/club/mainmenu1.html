@@ -77,7 +77,7 @@
     <div class="artboard-element image-element" data-id="5"></div>
     <div class="artboard-element image-element" data-id="6"></div>
     <div class="features-section">
-        <h2>МЫ НЕ ЗАРАБАТЫВАЕМ НА ВАШИХ ДЕТЯХ, А ПРИВИВАЕМ ЛЮБОВЬ К СПОРТУ!</h2>
+        <h2>Мы НЕ зарабатываем на Ваших детях, а прививаем ЛЮБОВЬ К СПОРТУ!</h2>
 
 
         <div class="features-grid">
@@ -101,6 +101,159 @@
         </div>
     </div>
 </div>
+<style>
+.title {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.title h1 {
+    font-size: 36px;
+    color: #fff;
+}
+
+.training-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.training-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 5;
+    column-gap: 20px;
+}
+
+.image-wrapper {
+    position: relative;
+    z-index: 5;
+}
+
+.training-image {
+    width: 350px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 20px; /* Скругленные углы */
+    position: relative;
+    z-index: 5;
+}
+
+.text-content {
+    text-align: left;
+    position: relative;
+    z-index: 5;
+    color: #fff;
+}
+
+.text-content p {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.custom-button-direction {
+    background-color: #ff4500;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position: relative;
+    z-index: 10;
+    margin-top: 10px;
+    margin-right: 10px; /* Разделение кнопок */
+}
+
+.custom-button-direction:hover {
+    background-color: #e03e00;
+}
+
+.button-container-direction {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+</style>
+
+<div class="artboard-container">
+    <div class="artboard-element image-element" data-id="5"></div>
+    <div class="artboard-element image-element" data-id="6"></div>
+    <div class="title">
+        <h1>САМБО</h1>
+    </div>
+    <div class="training-section">
+        <!-- Сборы -->
+        <div class="training-item">
+            <div class="image-wrapper">
+                <img src="{% static 'club/images/sbori.jpg' %}" alt="сборы" class="training-image">
+            </div>
+            <div class="text-content">
+                <p>Описание сборов. Тут вы можете указать уникальные особенности и преимущества.</p>
+                <div class="button-container-direction">
+                    <button class="custom-button-direction" onclick="openForm('karate')">Подробнее</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Мероприятия -->
+        <div class="training-item reverse">
+            <div class="text-content">
+                <p>Описание мероприятий. Тут вы можете указать уникальные особенности и преимущества.</p>
+                <div class="button-container-direction">
+                    <button class="custom-button-direction" onclick="openForm('karate')">Подробнее</button>
+                </div>
+            </div>
+            <div class="image-wrapper">
+                <img src="{% static 'club/images/events.jpg' %}" alt="мероприятия" class="training-image">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="artboard-container">
+    <div class="artboard-element image-element" data-id="1"></div>
+    <div class="artboard-element image-element" data-id="2"></div>
+    <div class="training-section">
+        <div class="training-item">
+            <div class="image-wrapper">
+                <img src="{% static 'club/images/karate.jpg' %}" alt="Каратэ" class="training-image">
+            </div>
+            <div class="text-content">
+                <h2>КАРАТЭ</h2>
+                <p>Описание тренировок по каратэ. Тут вы можете указать уникальные особенности и преимущества.</p>
+                <button class="custom-button-direction" onclick="openForm('trial')">Записаться на тренировку</button>
+                <button class="custom-button-direction" onclick="openForm('boxing')">Подробнее</button>
+            </div>
+        </div>
+
+        <div class="training-item reverse">
+            <div class="text-content">
+                <h2>ТХЭКВОНДО</h2>
+                <p>Описание тренировок по боксу. Тут вы можете указать уникальные особенности и преимущества.</p>
+                <button class="custom-button-direction" onclick="openForm('karate')">Подробнее</button>
+                <button class="custom-button-direction" onclick="openForm('trial')">Записаться на тренировку</button>
+            </div>
+            <div class="image-wrapper">
+                <img src="{% static 'club/images/thekvando.jpg' %}" alt="Бокс" class="training-image">
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 
 {% endblock %}
