@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import os.path
 from pathlib import Path
-
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -141,6 +141,6 @@ CACHES = {
         "LOCATION": os.path.join(BASE_DIR, 'vityaz_cash')
     }
 }
-
-RECAPTCHA_SITE_KEY = '6LdaxGYqAAAAALeQYaNE9vtvOvidFyjvGKdSB4LO'
-RECAPTCHA_SECRET_KEY = '6LdaxGYqAAAAAAE8ZygU9lfW_KzwlUk-3MrfnwN-'
+load_dotenv()
+RECAPTCHA_SITE_KEY = os.getenv("RECAPTCHA_SITE_KEY")
+RECAPTCHA_SECRET_KEY = os.getenv("RECAPTCHA_SECRET_KEY")
