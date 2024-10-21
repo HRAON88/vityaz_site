@@ -161,11 +161,97 @@
 .image-element[data-id="3"] {
     z-index: 0;
     top: 450px;
-    left: calc(50% - 0pxpx);
+    left: calc(50% - 0px);
     width: 901px;
     height: 700px;
     background-image: url("/static/club/images/shine1.png");
 }
+
+.features-section {
+    position: relative;
+    z-index: 2;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    color: #fff; /* Контрастный цвет текста */
+}
+
+.features-section h2, .features-section p {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.features-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+    align-items: stretch; /* Все элементы растягиваются по высоте */
+}
+
+.feature-item {
+    flex: 1 1 calc(25% - 40px); /* Ширина для 4 элементов в строке */
+    max-width: 200px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Равномерно распределяет контент по вертикали */
+    min-height: 100px; /* Минимальная высота для выравнивания */
+    max-height: 300px;
+}
+
+.feature-item img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+    flex-grow: 0; /* Не растягивается */
+}
+
+.feature-item p {
+    flex-grow: 1; /* Растягивается, чтобы занимать доступное пространство */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .feature-item {
+        flex: 1 1 calc(50% - 40px); /* 2 элемента в строке на маленьких экранах */
+    }
+}
+
+.image-element[data-id="4"] {
+    background-image: url("/static/club/images/shine2.png");
+    z-index: 1;
+    left: calc(50% - 1000px);
+    width: 1246px;
+    height: 877px;
+    top: 300px;
+}
+
+
+.image-element[data-id="5"] {
+    background-image: url("/static/club/images/shine2.png");
+    z-index: 1;
+    left: calc(50% - 800px);
+    width: 1246px;
+    height: 877px;
+    top: -750px;
+}
+
+
+.image-element[data-id="6"] {
+    background-image: url("/static/club/images/shine2.png");
+    z-index: 1;
+    left: calc(50% - 600px + 503px);
+    width: 1046px;
+    height: 877px;
+    top: -200px;
+}
+
 
 .logo-image {
     position: absolute;
