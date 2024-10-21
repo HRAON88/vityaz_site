@@ -4,11 +4,13 @@ from django.db.models import Count
 from .models import *
 
 
+
 menu = [
         {'title': 'Расписание', 'url_name': 'schedule'},
         {'title': 'Обратная связь', 'url_name': 'contact'},
         {'title': 'Новости', 'url_name': 'news'}
         ]
+
 
 class DataMixin:
     paginate_by = 4
