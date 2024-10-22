@@ -130,7 +130,7 @@ class ClubMainMenu(DataMixin, ListView):
                     TrialLesson.objects.create(
                         full_name=trial_form.cleaned_data['full_name'],
                         age=trial_form.cleaned_data['age'],
-                        direction=trial_form.cleaned_data['direction'],
+                        sport=trial_form.cleaned_data['sport'],
                         phone_number=trial_form.cleaned_data['phone_number']
                     )
                     message_success = "Вы успешно записались на пробное занятие!"

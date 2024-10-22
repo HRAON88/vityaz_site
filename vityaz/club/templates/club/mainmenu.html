@@ -1,189 +1,307 @@
 {% extends 'club/base.html' %}
 {% block content %}
 {% load static %}
-<div class="artboard-container">
+<style>
+    .artboard-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #000000;
+    background-size: cover;
+}
+
+.artboard-element {
+    position: absolute;
+    box-sizing: border-box;
+    display: table;
+    width: 100%;
+    height: auto;
+    background-size: cover;
+    background-position: center;
+}
+</style>
+
+<div class="artboard-container-main">
     <div class="artboard-element image-element" data-id="1"></div>
     <div class="artboard-element image-element" data-id="2"></div>
     <div class="artboard-element image-element" data-id="3"></div>
 
-    <!-- New Image Div -->
     <div class="logo-image"></div>
 
     <div class="button-container">
-        <button class="custom-button" onclick="openForm()">Записаться на пробное занятие</button>
-        <button class="custom-button second-button" onclick="openForm()">Заказать звонок</button>
+        <button class="custom-button" onclick="openForm('trial')">Записаться на пробное занятие</button>
+        <button class="custom-button second-button" onclick="openForm('callback')">Заказать звонок</button>
     </div>
-    <div id="form-popup" class="form-popup">
-        <form class="form-container">
-            <h2>Записаться</h2>
-            <label for="name"><b>ФИО</b></label>
-            <input type="text" placeholder="Введите ФИО" name="name" required>
 
-            <label for="age"><b>Возраст ребёнка</b></label>
-            <input type="number" placeholder="Введите возраст" name="age" required>
+    {% if message_success %}
+    <div class="success-message">{{ message_success }}</div>
+    {% endif %}
 
-            <label for="phone"><b>Номер телефона</b></label>
-            <input type="tel" placeholder="Введите номер телефона" name="phone" required>
+    <div id="overlay" class="overlay" onclick="closeForm()"></div>
 
-            <button type="submit" class="btn">Отправить</button>
-            <button type="button" class="btn cancel" onclick="closeForm()">Закрыть</button>
+    <div id="trial-form-popup" class="form-popup {% if trial_form.errors %}visible{% endif %}">
+        <span class="close-button" onclick="closeForm()">&times;</span>
+        <form method="post" class="form-container" id="trial-form">
+            {% csrf_token %}
+            {{ trial_form.non_field_errors }}
+            {% for field in trial_form %}
+                <div class="form-group">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.errors %}
+                        <div class="error">{{ field.errors }}</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <div class="recaptcha-wrapper">
+                <div class="g-recaptcha" data-sitekey="{{ RECAPTCHA_SITE_KEY }}" data-callback="onRecaptchaSuccess"></div>
+            </div>
+            <button type="submit" name="trial_submit" class="btn" id="submit-btn" disabled>Отправить</button>
         </form>
+        {% if message and trial_form.errors %}
+            <div class="alert">{{ message }}</div>
+        {% endif %}
+    </div>
+
+    <div id="callback-form-popup" class="form-popup {% if callback_form.errors %}visible{% endif %}">
+        <span class="close-button" onclick="closeForm()">&times;</span>
+        <form method="post" class="form-container" id="callback-form">
+            {% csrf_token %}
+            {{ callback_form.non_field_errors }}
+            {% for field in callback_form %}
+                <div class="form-group">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.errors %}
+                        <div class="error">{{ field.errors }}</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <div class="recaptcha-wrapper">
+                <div class="g-recaptcha" data-sitekey="{{ RECAPTCHA_SITE_KEY }}" data-callback="onRecaptchaSuccess"></div>
+            </div>
+            <button type="submit" name="callback_submit" class="btn" id="submit-btn-callback" disabled>Отправить</button>
+        </form>
+        {% if message and callback_form.errors %}
+            <div class="alert">{{ message }}</div>
+        {% endif %}
     </div>
 </div>
 
-<style>
-    .artboard-container {
-        position: relative;
-        width: 100%;
-        height: 100vh;
-        overflow: hidden;
-        background-color: #000000;
-        background-size: cover;
-    }
 
-    .artboard-element {
-        position: absolute;
-        box-sizing: border-box;
-        display: table;
-        width: 100%;
-        height: 100%;
-        background-size: cover;
-        background-position: center;
-    }
+<div class="artboard-container">
+    <div class="artboard-element image-element" data-id="4"></div>
+    <div class="artboard-element image-element" data-id="5"></div>
+    <div class="artboard-element image-element" data-id="6"></div>
+    <div class="features-section">
+        <h2>Мы НЕ зарабатываем на Ваших детях, а прививаем ЛЮБОВЬ К СПОРТУ!</h2>
 
-    .image-element[data-id="1"] {
-        background-image: url("{% static 'club/images/shine2.png' %}");
-        z-index: 1;
-        left: calc(50% - 600px + 503px);
-        width: 1246px;
-        height: 877px;
-        top: -200px;
-    }
 
-    .image-element[data-id="2"] {
-        z-index: 0;
-        top: -184px;
-        left: calc(50% - 600px + -368px);
-        width: 821px;
-        height: 578px;
-        background-image: url("{% static 'club/images/shine1.png' %}");
-    }
+        <div class="features-grid">
+            <div class="feature-item">
+                <img src="{% static 'club/images/trener.png' %}" alt="Icon 1">
+                <p>Лучшие профессиональные тренеры</p>
+            </div>
+            <div class="feature-item">
+                <img src="{% static 'club/images/bonus.png' %}" alt="Icon 2">
+                <p>Бесплатное пробное занятие для всех</p>
+            </div>
+            <div class="feature-item">
+                <img src="{% static 'club/images/discipline.png' %}" alt="Icon 3">
+                <p>Воспитание дисциплины и личностных качеств</p>
+            </div>
+            <div class="feature-item">
+                <img src="{% static 'club/images/competitions.png' %}" alt="Icon 4">
+                <p>Участие в соревнованиях и сборах</p>
+            </div>
+            <!-- Add more features as needed -->
+        </div>
+    </div>
+</div>
 
-    .image-element[data-id="3"] {
-        z-index: 0;
-        top: 450px;
-        left: calc(50% - 0pxpx);
-        width: 901px;
-        height: 700px;
-        background-image: url("{% static 'club/images/shine1.png' %}");
-    }
 
-    .logo-image {
-        position: absolute;
-        top: 80px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 3;
-        width: 800px;
-        height: 800px;
-        background-image: url("{% static 'club/images/vityaz.png' %}");
-        background-size: contain;
-        background-repeat: no-repeat;
-    }
 
-    .button-container {
-    position: absolute;
-    bottom: 50px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    z-index: 4;
-}
 
-.custom-button {
-    background-color: #ff0000;
-    color: white;
-    padding: 20px 5px;
-    font-size: 18px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    width: 400px; /* Установите фиксированную ширину */
-    text-align: center; /* Центрирование текста */
-}
 
-.custom-button:hover {
-    background-color: #cc0000;
-}
+  <div class="artboard-container">
+        <!-- Содержание страницы -->
+        <div class="artboard-element image-element" data-id="4"></div>
+        <div class="artboard-element image-element" data-id="6"></div>
+        <div class="title-for-direction">
+            <h1>САМБО</h1>
+        </div>
+        <div class="training-section">
+            <!-- Самбо -->
+            <div class="training-item">
+                <div class="image-wrapper">
+                    <img src="{% static 'club/images/sambo.jpg' %}" alt="самбо" class="training-image">
+                </div>
+                <div class="text-content-for-direction">
+                    <p>Самбо, или самооборона без оружия, — это боевое искусство, которое
+                        объединяет техники из различных мировых единоборств. Оно включает элементы из дзюдо, джиу-джитсу,
+                        классической борьбы и национальных видов борьбы, что делает его чрезвычайно разнообразным.
+                        Самбо славится огромным количеством приёмов, включая броски, захваты, болевые и удушающие техники.
+                        Такой арсенал позволяет спортсменам быть универсальными и адаптивными в различных ситуациях на ковре.
+                        </p>
+                    <div class="button-container-direction">
+                        <button id="samboButton" class="custom-button-direction">Подробнее</button>
+                    </div>
+                </div>
+            </div>
 
-.second-button {
-    background-color: #0000ff;
-}
+            <!-- Мероприятия -->
+            <div class="training-item reverse">
+                <div class="text-content-for-direction">
+                    <p>Мы предлагаем широкий спектр мероприятий, начиная от захватывающих спортивных состязаний по боулингу,
+                        просмотров фильмов в кинотеатре, до увлекательных тематических вечеринок, которые создают атмосферу праздника и веселья!</p>
+                    <div class="button-container-direction">
+                        <button id="eventsButton" class="custom-button-direction">Подробнее</button>
+                    </div>
+                </div>
+                <div class="image-wrapper">
+                    <img src="{% static 'club/images/events.jpg' %}" alt="мероприятия" class="training-image">
+                </div>
+            </div>
+            <div class="training-item">
+                <div class="image-wrapper">
+                    <img src="{% static 'club/images/sbori.jpg' %}" alt="сборы" class="training-image">
+                </div>
+                <div class="text-content-for-direction">
+                    <p>Помимо соревнований, команда ВСК Витязь ежегодно принимает участие в летних и зимних выездных сборах!</p>
+                    <div class="button-container-direction">
+                        <button id="sboriButton" class="custom-button-direction">Подробнее</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-.second-button:hover {
-    background-color: #0000cc;
-}
 
-    .form-popup {
-    display: none;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        border: 3px solid #f1f1f1;
-        z-index: 9;
-        background-color: white;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.3);
-    }
+<!-- Модальное окно -->
+<div id="customModal" class="custom-modal">
+    <div class="custom-modal-content">
+        <span id="closeModal" class="close-button">&times;</span>
 
-    .form-container {
-        max-width: 300px;
-        padding: 10px;
-    }
+        <!-- Слайдер для сборов -->
+        <div id="sboriSlider" class="swiper-container" style="display: none;">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="{% static 'club/images/sbori.jpg' %}" alt="Сборы">
+                    <p>Подробная информация о летних и зимних сборах команды ВСК Витязь...</p>
+                </div>
+                <div class="swiper-slide">
+                    <img src="{% static 'club/images/sbori.jpg' %}" alt="Сборы">
+                    <p>Подробная информация о летних и зимних сборах команды ВСК Витязь...</p>
+                </div>
+                <div class="swiper-slide">
+                    <img src="{% static 'club/images/sbori.jpg' %}" alt="Сборы">
+                    <p>Подробная информация о летних и зимних сборах команды ВСК Витязь...</p>
+                </div>
+                <!-- Добавьте больше слайдов для сборов по мере необходимости -->
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+        </div>
 
-    .form-container input[type="text"],
-    .form-container input[type="number"],
-    .form-container input[type="tel"] {
-        width: 100%;
-        padding: 10px;
-        margin: 5px 0 20px 0;
-        border: none;
-        background: #f1f1f1;
-        border-radius: 5px;
-    }
+         <div id="karateSlider" class="swiper-container" style="display: none;">
+       <div class="swiper-wrapper">
+           <div class="swiper-slide">
+               <img src="{% static 'club/images/karate.jpg' %}" alt="Каратэ">
+               <p>Подробная информация о тренировках по каратэ...</p>
+           </div>
+           <!-- Добавьте больше слайдов, если нужно -->
+       </div>
+       <div class="swiper-button-next"></div>
+       <div class="swiper-button-prev"></div>
+       <div class="swiper-pagination"></div>
+   </div>
 
-    .form-container .btn {
-        background-color: #4CAF50;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        cursor: pointer;
-        width: 100%;
-        margin-bottom: 10px;
-        opacity: 0.8;
-        border-radius: 5px;
-    }
+   <!-- Слайдер для тхэквондо -->
+   <div id="techvandoSlider" class="swiper-container" style="display: none;">
+       <div class="swiper-wrapper">
+           <div class="swiper-slide">
+               <img src="{% static 'club/images/thekvando.jpg' %}" alt="Тхэквондо">
+               <p>Подробная информация о тренировках по тхэквондо...</p>
+           </div>
+           <!-- Добавьте больше слайдов, если нужно -->
+       </div>
+       <div class="swiper-button-next"></div>
+       <div class="swiper-button-prev"></div>
+       <div class="swiper-pagination"></div>
+   </div>
 
-    .form-container .cancel {
-        background-color: red;
-    }
+        <!-- Слайдер для самбо -->
+   <div id="samboSlider" class="swiper-container" style="display: none;">
+       <div class="swiper-wrapper">
+           <div class="swiper-slide">
+               <img src="{% static 'club/images/sambo.jpg' %}" alt="самбо">
+               <p>Подробная информация о тренировках по самбо...</p>
+           </div>
+           <!-- Добавьте больше слайдов, если нужно -->
+       </div>
+       <div class="swiper-button-next"></div>
+       <div class="swiper-button-prev"></div>
+       <div class="swiper-pagination"></div>
+   </div>
 
-    .form-container .btn:hover, .open-button:hover {
-        opacity: 1;
-    }
-</style>
+        <!-- Слайдер для мероприятий -->
+        <div id="eventsSlider" class="swiper-container" style="display: none;">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="{% static 'club/images/events/bowling.jpg' %}" alt="Боулинг">
+                    <p>Походы в боулинг!</p>
+                </div>
+                <div class="swiper-slide">
+                    <img src="{% static 'club/images/events/bowling.jpg' %}" alt="Боулинг">
+                    <p>Походы в боулинг!</p>
+                </div>
+                <div class="swiper-slide">
+                    <img src="{% static 'club/images/events/bowling.jpg' %}" alt="Боулинг">
+                    <p>Походы в боулинг!</p>
+                </div>
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+</div>
 
-<script>
-    function openForm() {
-        document.getElementById("form-popup").style.display = "block";
-    }
 
-    function closeForm() {
-        document.getElementById("form-popup").style.display = "none";
-    }
-</script>
+<div class="artboard-container">
+    <div class="artboard-element image-element" data-id="1"></div>
+    <div class="artboard-element image-element" data-id="2"></div>
+    <div class="training-section">
+        <div class="training-item">
+            <div class="image-wrapper">
+                <img src="{% static 'club/images/karate.jpg' %}" alt="Каратэ" class="training-image">
+            </div>
+            <div class="text-content-for-direction">
+                <h2>АРАШИ КАРАТЕ</h2>
+                <p>Современное полноконтактное единоборство, включающее в себя всё самое лучшее и прогресивное из восточных и традиционных видов единоборств, таких как бокс, карате,
+                    муай тай (тайский бокс), дзюдо, самбо, вольная борьба,грэпплинг, айкидо и айкиджитсу.</p>
+                    <button class="custom-button-direction" onclick="openForm('trial')">Записаться на тренировку</button>
+                    <button id="karateDetailsButton" class="custom-button-direction">Подробнее</button>
+            </div>
+        </div>
+
+        <div class="training-item reverse">
+            <div class="text-content-for-direction">
+                <h2>ТХЭКВОНДО</h2>
+                <p>Корейское боевое искусство, особенностью которого является возможность использования в бою ног для ударов и бросков. В отличие от других корейских единоборств, в
+                    тхэквондо не используют оружия, считается, что человеческое тело само по себе очень грозное оружие.</p>
+                 <button id="techvandoDetailsButton" class="custom-button-direction">Подробнее</button>
+                 <button class="custom-button-direction" onclick="openForm('trial')">Записаться на тренировку</button>
+            </div>
+            <div class="image-wrapper">
+                <img src="{% static 'club/images/thekvando.jpg' %}" alt="ткэхвандо" class="training-image">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 {% endblock %}

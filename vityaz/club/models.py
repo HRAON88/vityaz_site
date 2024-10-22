@@ -40,6 +40,7 @@ class Group(models.Model):
     trainer = models.CharField(max_length=100, verbose_name="Тренер")
     age_start = models.IntegerField(default=6, verbose_name="Со скольки лет")
     age_end = models.IntegerField(default=8, verbose_name="До скольки лет")
+    kind_of_sport = models.CharField(max_length=100, verbose_name="Название спорта", default='Самбо')
 
     def __str__(self):
         return self.name
@@ -67,16 +68,16 @@ class Schedule(models.Model):
 class TrialLesson(models.Model):
     full_name = models.CharField(max_length=100,  verbose_name='ФИО')
     age = models.IntegerField(verbose_name='Возраст ребенка')
-    direction = models.CharField(max_length=100,  verbose_name='Направление')
+    sport = models.CharField(max_length=100,  verbose_name='Вид спорта', default='Самбо')
     phone_number = models.CharField(max_length=15,  verbose_name='Телефон')
     time_create = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
 
     def __str__(self):
-        return f"{self.full_name} - {self.direction}"
+        return f"{self.full_name} - {self.sport}"
     class Meta:
         verbose_name = 'Заявки на тренировку'
         verbose_name_plural = 'Заявки на тренировки'
-        ordering = ['-time_create', 'direction']
+        ordering = ['-time_create', 'sport']
 
 class CallbackRequest(models.Model):
     full_name = models.CharField(max_length=100,  verbose_name='ФИО')
