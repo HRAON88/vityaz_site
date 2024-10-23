@@ -1,145 +1,83 @@
-
 document.addEventListener('DOMContentLoaded', function() {
-// Получение всех элементов кнопок
-const sboriButton = document.getElementById('sboriButton');
-const samboButton = document.getElementById('samboButton');
-const eventsButton = document.getElementById('eventsButton');
-const karateDetailsButton = document.getElementById('karateDetailsButton');
-const techvandoDetailsButton = document.getElementById('techvandoDetailsButton');
-const closeModalButton = document.getElementById('closeModal');
-const customModal = document.getElementById('customModal');
+    const customModal = document.getElementById('customModal');
+    const closeModalButton = document.getElementById('closeModal');
 
-// Переменные для хранения экземпляров Swiper
-let sboriSwiper, eventsSwiper, karateSwiper, techvandoSwiper, samboSwiper;
+    const sliders = {
+        sbori: { buttonId: 'sboriButton', sliderId: 'sboriSlider', swiperInstance: null },
+        sambo: { buttonId: 'samboButton', sliderId: 'samboSlider', swiperInstance: null },
+        events: { buttonId: 'eventsButton', sliderId: 'eventsSlider', swiperInstance: null },
+        karate: { buttonId: 'karateDetailsButton', sliderId: 'karateSlider', swiperInstance: null },
+        techvando: { buttonId: 'techvandoDetailsButton', sliderId: 'techvandoSlider', swiperInstance: null }
+    };
 
-// Добавление обработчиков событий для кнопок
-if (sboriButton) {
-    sboriButton.addEventListener('click', function() {
-        openModal('sbori');
-    });
-}
-if (samboButton) {
-    samboButton.addEventListener('click', function() {
-        openModal('sambo');
-    });
-}
+    function openModal(type) {
+        customModal.style.display = "block";
+        hideAllSliders();
 
-if (eventsButton) {
-    eventsButton.addEventListener('click', function() {
-        openModal('events');
-    });
-}
+        const sliderInfo = sliders[type];
+        if (!sliderInfo) {
+            return;
+        }
 
-if (karateDetailsButton) {
-    karateDetailsButton.addEventListener('click', function() {
-        openModal('karate');
-    });
-}
+        const sliderElement = document.getElementById(sliderInfo.sliderId);
+        if (!sliderElement) {
+            return;
+        }
 
-if (techvandoDetailsButton) {
-    techvandoDetailsButton.addEventListener('click', function() {
-        openModal('techvando');
-    });
-}
+        sliderElement.style.display = 'block';
 
-if (closeModalButton) {
-    closeModalButton.addEventListener('click', closeModal);
-}
-
-// Функция открытия модального окна
-function openModal(type) {
-    customModal.style.display = "block";
-    hideAllSliders();
-
-    switch (type) {
-        case 'sbori':
-            const sboriSlider = document.getElementById('sboriSlider');
-            sboriSlider.style.display = 'block';
-            if (!sboriSwiper) {
-                sboriSwiper = initSwiper('#sboriSlider');
-            } else {
-                sboriSwiper.update();
-            }
-            break;
-
-        case 'sambo':
-            const samboSlider = document.getElementById('samboSlider');
-            samboSlider.style.display = 'block';
-            if (!samboSwiper) {
-                samboSwiper = initSwiper('#samboSlider');
-            } else {
-                samboSwiper.update();
-            }
-            break;
-
-        case 'events':
-            const eventsSlider = document.getElementById('eventsSlider');
-            eventsSlider.style.display = 'block';
-            if (!eventsSwiper) {
-                eventsSwiper = initSwiper('#eventsSlider');
-            } else {
-                eventsSwiper.update();
-            }
-            break;
-
-        case 'karate':
-            const karateSlider = document.getElementById('karateSlider');
-            karateSlider.style.display = 'block';
-            if (!karateSwiper) {
-                karateSwiper = initSwiper('#karateSlider');
-            } else {
-                karateSwiper.update();
-            }
-            break;
-
-        case 'techvando':
-            const techvandoSlider = document.getElementById('techvandoSlider');
-            techvandoSlider.style.display = 'block';
-            if (!techvandoSwiper) {
-                techvandoSwiper = initSwiper('#techvandoSlider');
-            } else {
-                techvandoSwiper.update();
-            }
-            break;
+        if (!sliderInfo.swiperInstance) {
+            sliderInfo.swiperInstance = initSwiper(`#${sliderInfo.sliderId}`);
+        } else {
+            sliderInfo.swiperInstance.update();
+        }
     }
-}
 
-// Функция скрытия всех слайдеров
-function hideAllSliders() {
-    document.getElementById('sboriSlider').style.display = 'none';
-    document.getElementById('samboSlider').style.display = 'none';
-    document.getElementById('eventsSlider').style.display = 'none';
-    document.getElementById('karateSlider').style.display = 'none';
-    document.getElementById('techvandoSlider').style.display = 'none';
-}
-
-// Функция закрытия модального окна
-function closeModal() {
-    customModal.style.display = "none";
-    hideAllSliders();
-}
-// Закрытие модального окна при нажатии на затемнённую область
-window.onclick = function(event) {
-    if (event.target === customModal) {
-        closeModal();
+    function hideAllSliders() {
+        Object.values(sliders).forEach(({ sliderId }) => {
+            const elem = document.getElementById(sliderId);
+            if (elem) {
+                elem.style.display = 'none';
+            }
+        });
     }
-}
 
-// Функция инициализации Swiper
-function initSwiper(selector) {
-    return new Swiper(selector, {
-        loop: true,
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-        },
-        slidesPerView: 1,
-        spaceBetween: 30,
-        speed: 600,
+    function closeModal() {
+        customModal.style.display = "none";
+        hideAllSliders();
+    }
+
+    Object.entries(sliders).forEach(([type, { buttonId }]) => {
+        const buttonElement = document.getElementById(buttonId);
+        if (buttonElement) {
+            buttonElement.addEventListener('click', () => openModal(type));
+        }
     });
-}
+
+    if (closeModalButton) {
+        closeModalButton.addEventListener('click', closeModal);
+    }
+
+    window.onclick = function(event) {
+        if (event.target === customModal) {
+            closeModal();
+        }
+    }
+
+    function initSwiper(selector) {
+        return new Swiper(selector, {
+            loop: true,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            slidesPerView: 1,
+            spaceBetween: 30,
+            speed: 600,
+        });
+    }
 });

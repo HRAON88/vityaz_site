@@ -88,6 +88,10 @@ class ScheduleAPIView(APIView):
         return Response(serializer.data)
 
 
+# club/views.py
+
+from .slider_data import get_slider_data
+
 
 class ClubMainMenu(DataMixin, ListView):
     template_name = 'club/mainmenu1.html'
@@ -99,11 +103,15 @@ class ClubMainMenu(DataMixin, ListView):
         trial_form = TrialLessonForm()
         callback_form = CallbackRequestForm()
 
+        # Получаем данные слайдеров из отдельного модуля
+        sliders = get_slider_data()
+
         context.update({
             'trial_form': trial_form,
             'callback_form': callback_form,
             'RECAPTCHA_SITE_KEY': settings.RECAPTCHA_SITE_KEY,
-            'message': None
+            'message': None,
+            'sliders': sliders  # Добавляем список слайдеров в контекст
         })
 
         c_def = self.get_user_context(title='Главная страница')

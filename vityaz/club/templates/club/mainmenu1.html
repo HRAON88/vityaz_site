@@ -172,115 +172,27 @@
     <div class="custom-modal-content">
         <span id="closeModal" class="close-button">&times;</span>
 
-        <!-- Слайдер для сборов -->
-        <div id="sboriSlider" class="swiper-container" style="display: none;">
+        <!-- Слайдеры -->
+        {% for slider in sliders %}
+        <div id="{{ slider.id }}" class="swiper-container" style="display: none;"> <!-- Скрываем все слайдеры по умолчанию -->
             <div class="swiper-wrapper">
+                {% for slide in slider.slides %}
                 <div class="swiper-slide">
-                    <img src="{% static 'club/images/sbori.jpg' %}" alt="Сборы">
-                    <p>Подробная информация о летних и зимних сборах команды ВСК Витязь...</p>
+                    <img src="{% static slide.image %}" alt="{{ slide.alt_text }}">
+                    <p>{{ slide.description }}</p>
                 </div>
-                <div class="swiper-slide">
-                    <img src="{% static 'club/images/sbori.jpg' %}" alt="Сборы">
-                    <p>Подробная информация о летних и зимних сборах команды ВСК Витязь...</p>
-                </div>
-                <div class="swiper-slide">
-                    <img src="{% static 'club/images/sbori.jpg' %}" alt="Сборы">
-                    <p>Подробная информация о летних и зимних сборах команды ВСК Витязь...</p>
-                </div>
-                <!-- Добавьте больше слайдов для сборов по мере необходимости -->
+                {% endfor %}
             </div>
             <div class="swiper-button-next"></div>
             <div class="swiper-button-prev"></div>
             <div class="swiper-pagination"></div>
         </div>
-
-         <div id="karateSlider" class="swiper-container" style="display: none;">
-       <div class="swiper-wrapper">
-           <div class="swiper-slide">
-               <img src="{% static 'club/images/karate.jpg' %}" alt="Каратэ">
-               <p>Подробная информация о тренировках по каратэ...</p>
-           </div><div class="swiper-slide">
-               <img src="{% static 'club/images/karate.jpg' %}" alt="Каратэ">
-               <p>Подробная информация о тренировках по каратэ...</p>
-           </div>
-           <div class="swiper-slide">
-               <img src="{% static 'club/images/karate.jpg' %}" alt="Каратэ">
-               <p>Подробная информация о тренировках по каратэ...</p>
-           </div>
-
-           <!-- Добавьте больше слайдов, если нужно -->
-       </div>
-       <div class="swiper-button-next"></div>
-       <div class="swiper-button-prev"></div>
-       <div class="swiper-pagination"></div>
-   </div>
-
-   <!-- Слайдер для тхэквондо -->
-   <div id="techvandoSlider" class="swiper-container" style="display: none;">
-       <div class="swiper-wrapper">
-           <div class="swiper-slide">
-               <img src="{% static 'club/images/thekvando.jpg' %}" alt="Тхэквондо">
-               <p>Подробная информация о тренировках по тхэквондо...</p>
-           </div>
-            <div class="swiper-slide">
-               <img src="{% static 'club/images/thekvando.jpg' %}" alt="Тхэквондо">
-               <p>Подробная информация о тренировках по тхэквондо...</p>
-           </div>
-            <div class="swiper-slide">
-               <img src="{% static 'club/images/thekvando.jpg' %}" alt="Тхэквондо">
-               <p>Подробная информация о тренировках по тхэквондо...</p>
-           </div>
-           <!-- Добавьте больше слайдов, если нужно -->
-       </div>
-       <div class="swiper-button-next"></div>
-       <div class="swiper-button-prev"></div>
-       <div class="swiper-pagination"></div>
-   </div>
-
-        <!-- Слайдер для самбо -->
-   <div id="samboSlider" class="swiper-container" style="display: none;">
-       <div class="swiper-wrapper">
-           <div class="swiper-slide">
-               <img src="{% static 'club/images/sambo.jpg' %}" alt="самбо">
-               <p>Подробная информация о тренировках по самбо...</p>
-           </div>
-           <div class="swiper-slide">
-               <img src="{% static 'club/images/sambo.jpg' %}" alt="самбо">
-               <p>Подробная информация о тренировках по самбо...</p>
-           </div>
-           <div class="swiper-slide">
-               <img src="{% static 'club/images/sambo.jpg' %}" alt="самбо">
-               <p>Подробная информация о тренировках по самбо...</p>
-           </div>
-           <!-- Добавьте больше слайдов, если нужно -->
-       </div>
-       <div class="swiper-button-next"></div>
-       <div class="swiper-button-prev"></div>
-       <div class="swiper-pagination"></div>
-   </div>
-
-        <!-- Слайдер для мероприятий -->
-        <div id="eventsSlider" class="swiper-container" style="display: none;">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <img src="{% static 'club/images/events/bowling1.png' %}" alt="Боулинг">
-                    <p>Походы в боулинг!</p>
-                </div>
-                <div class="swiper-slide">
-                    <img src="{% static 'club/images/events/bowling1.png' %}" alt="Боулинг">
-                    <p>Походы в боулинг!</p>
-                </div>
-                <div class="swiper-slide">
-                    <img src="{% static 'club/images/events/bowling1.png' %}" alt="Боулинг">
-                    <p>Походы в боулинг!</p>
-                </div>
-            </div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-pagination"></div>
-        </div>
+        {% endfor %}
     </div>
 </div>
+
+
+
 
 
 <div class="artboard-container">
