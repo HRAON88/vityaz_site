@@ -1,156 +1,33 @@
 {% extends 'club/base.html' %}
+{% load static %}
 {% load custom_filters %}
 {% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'club/css/schedule.css' %}" />
 
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}}</title>
-    <style>
-        /* Ensure the HTML and body take up the full height */
-        html, body {
-            height: 100%;
-            margin: 0;
-        }
+<div class="page-container">
+    <div class="content-wrapper">
+        <h1>{{title}}</h1>
+        <label for="kind_of_sport">Выберите вид спорта: </label>
+        <select id="kind_of_sport">
+            <option value="Sambo">Самбо</option>
+            <option value="Karate">Карате</option>
+            <option value="Taekwondo">Тхэквандо</option>
+        </select>
 
-        /* Main container that uses flexbox to layout content and footer */
-        .page-container {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
+        <label for="age">Выберите возраст: </label>
+        <select id="age">
+            {% for age in 3|range_filter:17 %}
+            <option value="{{ age }}">{{ age }} лет</option>
+            {% endfor %}
+        </select>
 
-        /* Content area that grows to push footer to the bottom */
-        .content-wrapper {
-            flex: 1 0 auto;
-            padding: 20px;
-        }
+        <button id="getSchedule">Получить расписание</button>
 
-        /* Styling for the select box and button */
-        label, select, button {
-            font-size: 1.5em;
-            margin-right: 10px;
-        }
-
-        select {
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            width: 200px;
-            appearance: none;
-            background-color: #f8f8f8;
-            transition: background-color 0.3s ease;
-            cursor: pointer;
-        }
-
-        select:hover {
-            background-color: #e2e2e2;
-        }
-
-        button {
-            padding: 14px 28px;
-            border-radius: 8px;
-            border: none;
-            background-color: #007BFF;
-            color: #fff;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
-        }
-
-        /* Table styling */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-
-        /* Footer stays at the bottom */
-        .footer {
-            flex-shrink: 0;
-            /* Add any additional styling needed for your footer */
-        }
-    </style>
-</head>
-<body>
-    <div class="page-container">
-        <div class="content-wrapper">
-            <h1>{{title}}</h1>
-            <label for="age">Выберите возраст: </label>
-            <select id="age">
-                {% for age in 3|range_filter:17 %}
-                <option value="{{ age }}">{{ age }} лет</option>
-                {% endfor %}
-            </select>
-            <button id="getSchedule">Получить расписание</button>
-
-            <div id="scheduleTable"></div>
-        </div>
+        <div id="scheduleTable"></div>
     </div>
+</div>
 
-    <script>
-    document.getElementById('getSchedule').addEventListener('click', function() {
-        const age = document.getElementById('age').value;
-
-
-        const daysOfWeek = {
-            0: 'Понедельник',
-            1: 'Вторник',
-            2: 'Среда',
-            3: 'Четверг',
-            4: 'Пятница',
-            5: 'Суббота',
-            6: 'Воскресенье'
-        };
-
-        fetch(`/api/schedule/${age}/`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    document.getElementById('scheduleTable').innerHTML = `<p>${data.error}</p>`;
-                } else {
-                    let tableHTML = `<table><tr><th>Группа</th><th>День недели</th><th>Начало</th><th>Конец</th><th>Тренер</th></tr>`;
-                    data.forEach(schedule => {
-                        // Используем объект для преобразования числового значения
-                        const dayName = daysOfWeek[schedule.day_of_week] || 'Неизвестный день';
-
-                        tableHTML += `<tr>
-                            <td>${schedule.group.name}</td>
-                            <td>${dayName}</td>
-                            <td>${schedule.start_time}</td>
-                            <td>${schedule.end_time}</td>
-                            <td>${schedule.group.trainer}</td>
-                          </tr>`;
-                    });
-                    tableHTML += `</table>`;
-                    document.getElementById('scheduleTable').innerHTML = tableHTML;
-                }
-            })
-            .catch(error => console.error('Error fetching schedule:', error));
-    });
-</script>
-
-</body>
-</html>
+<!-- Подключаем внешний JavaScript файл -->
+<script src="{% static 'club/js/scripts-for-schedule.js' %}"></script>
 
 {% endblock %}

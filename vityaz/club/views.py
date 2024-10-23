@@ -80,10 +80,10 @@ class ScheduleView(DataMixin, ListView):
 
 class ScheduleAPIView(APIView):
 
-    def get(self, request, age, format=None):
+    def get(self, request, age, kind_of_sport, format=None):
 
         schedules = Schedule.objects.filter(group__age_start__lte=age,
-                                            group__age_end__gte=age)
+                                            group__age_end__gte=age, group__kind_of_sport=kind_of_sport)
         serializer = ScheduleSerializer(schedules, many=True)
         return Response(serializer.data)
 

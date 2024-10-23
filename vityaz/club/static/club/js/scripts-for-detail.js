@@ -53,33 +53,52 @@ function openModal(type) {
 
     switch (type) {
         case 'sbori':
-            document.getElementById('sboriSlider').style.display = 'block';
+            const sboriSlider = document.getElementById('sboriSlider');
+            sboriSlider.style.display = 'block';
             if (!sboriSwiper) {
                 sboriSwiper = initSwiper('#sboriSlider');
+            } else {
+                sboriSwiper.update();
             }
             break;
+
         case 'sambo':
-            document.getElementById('samboSlider').style.display = 'block';
+            const samboSlider = document.getElementById('samboSlider');
+            samboSlider.style.display = 'block';
             if (!samboSwiper) {
                 samboSwiper = initSwiper('#samboSlider');
+            } else {
+                samboSwiper.update();
             }
             break;
+
         case 'events':
-            document.getElementById('eventsSlider').style.display = 'block';
+            const eventsSlider = document.getElementById('eventsSlider');
+            eventsSlider.style.display = 'block';
             if (!eventsSwiper) {
                 eventsSwiper = initSwiper('#eventsSlider');
+            } else {
+                eventsSwiper.update();
             }
             break;
+
         case 'karate':
-            document.getElementById('karateSlider').style.display = 'block';
+            const karateSlider = document.getElementById('karateSlider');
+            karateSlider.style.display = 'block';
             if (!karateSwiper) {
                 karateSwiper = initSwiper('#karateSlider');
+            } else {
+                karateSwiper.update();
             }
             break;
+
         case 'techvando':
-            document.getElementById('techvandoSlider').style.display = 'block';
+            const techvandoSlider = document.getElementById('techvandoSlider');
+            techvandoSlider.style.display = 'block';
             if (!techvandoSwiper) {
                 techvandoSwiper = initSwiper('#techvandoSlider');
+            } else {
+                techvandoSwiper.update();
             }
             break;
     }

@@ -33,20 +33,30 @@
 
 .swiper-slide {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Расположение изображений в столбик */
     align-items: center;
     justify-content: center;
-    height: 100%; /* Полная высота для правильного позиционирования */
+    height: 100%;
     box-sizing: border-box;
-    padding: 20px; /* Отступы вокруг слайда для визуального разделения */
+    padding: 20px; /* Общие отступы вокруг слайда */
 }
 
 .swiper-slide img {
     max-width: 100%;
-    max-height: 100%;
-    object-fit: contain; /* Масштабирование изображения без обрезки */
-    margin: auto; /* Центрирование изображения */
+    height: auto;
+    object-fit: cover;
+    margin-bottom: 20px; /* Отступ снизу между изображениями */
+    will-change: transform;
+    transition: transform 0.3s ease-in-out;
+    border-radius: 7px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+/* Убираем отступ у последнего изображения, если не требуется */
+.swiper-slide img:last-child {
+    margin-bottom: 0;
+}
+
 
 .swiper-button-next, .swiper-button-prev {
     color: #333;
@@ -59,12 +69,16 @@
     margin-top: 10px;
 }
 
-#sboriSlider, #eventsSlider {
+#sboriSlider, #eventsSlider, #samboSlider, #karateSlider, #techvandoSlider {
     overflow-x: hidden; /* Скрыть горизонтальную полосу прокрутки */
     scrollbar-width: none; /* Для Firefox */
 }
 
-#sboriSlider::-webkit-scrollbar, #eventsSlider::-webkit-scrollbar {
+#sboriSlider::-webkit-scrollbar,
+#eventsSlider::-webkit-scrollbar,
+#samboSlider::-webkit-scrollbar,
+#karateSlider::-webkit-scrollbar,
+#techvandoSlider::-webkit-scrollbar {
     display: none; /* Для Chrome, Safari, Opera */
 }
 

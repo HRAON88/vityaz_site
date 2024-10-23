@@ -15,7 +15,7 @@ urlpatterns = [
     path('contact/', contact, name='contact'),
     path('schedule/', ScheduleView.as_view(), name='schedule'),
     path('post/<int:id>/', ShowPost.as_view(), name='post'),
-    path('api/schedule/<int:age>/', ScheduleAPIView.as_view(), name='schedule-api'),
+    path('api/schedule/<int:age>/<str:kind_of_sport>/', ScheduleAPIView.as_view(), name='schedule-api'),
     path('captcha/', include('captcha.urls')),
 
 

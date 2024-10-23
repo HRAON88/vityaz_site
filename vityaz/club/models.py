@@ -36,11 +36,26 @@ class Coach(models.Model):
     bio = models.TextField(blank=True, verbose_name="О тренере")
 
 class Group(models.Model):
+    SAMBO = 'Sambo'
+    KARATE = 'Karate'
+    TAEKWONDO = 'Taekwondo'
+
+    SPORT_CHOICES = [
+        (SAMBO, 'Самбо'),
+        (KARATE, 'Карате'),
+        (TAEKWONDO, 'Тхэквондо'),
+    ]
+
     name = models.CharField(max_length=100, verbose_name="Название группы")
     trainer = models.CharField(max_length=100, verbose_name="Тренер")
     age_start = models.IntegerField(default=6, verbose_name="Со скольки лет")
     age_end = models.IntegerField(default=8, verbose_name="До скольки лет")
-    kind_of_sport = models.CharField(max_length=100, verbose_name="Название спорта", default='Самбо')
+    kind_of_sport = models.CharField(
+        max_length=100,
+        verbose_name="Название спорта",
+        choices=SPORT_CHOICES,
+        default=SAMBO
+    )
 
     def __str__(self):
         return self.name
@@ -49,6 +64,7 @@ class Group(models.Model):
         verbose_name = 'Группа'
         verbose_name_plural = 'Группы'
         ordering = ['name']
+
 
 class Schedule(models.Model):
     group = models.ForeignKey(Group, on_delete=models.CASCADE, verbose_name='Группа')
