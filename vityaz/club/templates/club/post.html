@@ -41,7 +41,7 @@
     }
 </style>
 
-<link href="{% static 'club/css/lightbox.css' %}" rel="stylesheet" />
+
 <h1>{{ post.title }}</h1>
 {% if post.photos.exists %}
 <p><img class="img-article-left" src="{{ post.photos.first.photo.url }}" alt="{{ post.title }}"></p>
@@ -64,7 +64,7 @@
 
 <div class="page-info" id="page-info"></div>
 
-<script src="{% static 'club/js/lightbox-plus-jquery.js' %}"></script>
+
 <script>
     let currentPage = 0;
     const totalPhotos = {{ post.photos.count }};

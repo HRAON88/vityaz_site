@@ -1,0 +1,71 @@
+
+.coach-card {
+    margin: 10px;
+    width: 600px;
+    height: 300px;
+    border-radius: 8px;
+    box-shadow: 8px 8px 20px rgba(0, 0, 0, 1.2); /* Shadow effect */
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    z-index: 5;
+    transition: transform 0.2s; /* Smooth transition for hover effect */
+    overflow: hidden; /* Ensure rounded corners effect */
+    background-color: #fff; /* Set background color to white */
+}
+
+.coach-card:hover {
+    transform: scale(1.05); /* Slight enlargement on hover */
+}
+
+.coach-card img {
+    width: 50%; /* Half of the card */
+    height: 100%;
+    object-fit: cover; /* Ensure the image covers the entire image area */
+}
+
+.coach-card div {
+    width: 50%; /* Half of the card */
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #000; /* Set text color to black */
+}
+
+.coach-card h2 {
+    margin: 0 0 20px 0; /* Add bottom margin to create space below the title */
+    font-size: 1.8em; /* Increase the font size for fio */
+    color: #000; /* Set text color to black */
+}
+
+.coach-card p {
+    margin: 0;
+    color: #000; /* Set text color to black */
+    font-size: 1.0em;
+    line-height: 1.6;
+    font-weight: bold;
+}
+
+.row {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.row:last-child {
+    justify-content: center;
+}
+
+a {
+    text-decoration: none; /* Remove underline from link */
+    color: inherit; /* Inherit text color */
+}
+
+a:hover, a:focus, a:active {
+    text-decoration: none; /* Ensure no underline on hover or focus */
+    color: inherit; /* Maintain inherited color */
+}
+
+

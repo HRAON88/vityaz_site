@@ -34,6 +34,17 @@ class Photo(models.Model):
 class Coach(models.Model):
     fio = models.CharField(max_length=100, verbose_name="ФИО")
     bio = models.TextField(blank=True, verbose_name="О тренере")
+    photo = models.ImageField(upload_to="photos/%Y/%m/%d/", verbose_name="Фото", default='null')
+    ordering = models.IntegerField(verbose_name="Порядок", default=6)
+
+
+    def __str__(self):
+        return self.fio
+
+    class Meta:
+        verbose_name = 'Тренер'
+        verbose_name_plural = 'Тренеры'
+        ordering = ['ordering', 'fio']
 
 class Group(models.Model):
     SAMBO = 'Sambo'

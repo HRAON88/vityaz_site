@@ -3,6 +3,8 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'club/css/mainmenu.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'club/css/mainmenu-buttons.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'club/css/coaches.css' %}" />
+
 
 <div class="artboard-container-main">
     <div class="artboard-element image-element" data-id="1"></div>
@@ -227,6 +229,85 @@
     </div>
 </div>
 
+
+<div id="trainers-section" class="artboard-container">
+    <div class="artboard-element image-element" data-id="1"></div>
+    <div class="artboard-element image-element" data-id="2"></div>
+    <div class="artboard-element image-element" data-id="4"></div>
+    <div class="artboard-element image-element" data-id="5"></div>
+    <div class="artboard-element image-element" data-id="6"></div>
+    <div class="artboard-element image-element" data-id="7"></div>
+    <div class="features-section">
+    <div class="row">
+        {% for coach in coaches|slice:":2" %}
+            <a href="{{ coach.photo.url }}" data-lightbox="coach-gallery-{{ coach.id }}" data-title="{{ coach.fio }}">
+                <div class="coach-card">
+                    {% if coach.photo %}
+                        <img src="{{ coach.photo.url }}" alt="Фото {{ coach.fio }}">
+                    {% else %}
+                        <div><p>Фото отсутствует</p></div>
+                    {% endif %}
+                    <div>
+                        <h2>{{ coach.fio }}</h2>
+                        <p>{{ coach.bio|linebreaks }}</p>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+    <div class="row">
+        {% for coach in coaches|slice:"2:4" %}
+            <a href="{{ coach.photo.url }}" data-lightbox="coach-gallery-{{ coach.id }}" data-title="{{ coach.fio }}">
+                <div class="coach-card">
+                    {% if coach.photo %}
+                        <img src="{{ coach.photo.url }}" alt="Фото {{ coach.fio }}">
+                    {% else %}
+                        <div><p>Фото отсутствует</p></div>
+                    {% endif %}
+                    <div>
+                        <h2>{{ coach.fio }}</h2>
+                        <p>{{ coach.bio|linebreaks }}</p>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+    <div class="row">
+        {% for coach in coaches|slice:"4:6" %}
+            <a href="{{ coach.photo.url }}" data-lightbox="coach-gallery-{{ coach.id }}" data-title="{{ coach.fio }}">
+                <div class="coach-card">
+                    {% if coach.photo %}
+                        <img src="{{ coach.photo.url }}" alt="Фото {{ coach.fio }}">
+                    {% else %}
+                        <div><p>Фото отсутствует</p></div>
+                    {% endif %}
+                    <div>
+                        <h2>{{ coach.fio }}</h2>
+                        <p>{{ coach.bio|linebreaks }}</p>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+    <div class="row">
+        {% with coach=coaches.6 %}
+            <a href="{{ coach.photo.url }}" data-lightbox="coach-gallery-{{ coach.id }}" data-title="{{ coach.fio }}">
+                <div class="coach-card">
+                    {% if coach.photo %}
+                        <img src="{{ coach.photo.url }}" alt="Фото {{ coach.fio }}">
+                    {% else %}
+                        <div><p>Фото отсутствует</p></div>
+                    {% endif %}
+                    <div>
+                        <h2>{{ coach.fio }}</h2>
+                        <p>{{ coach.bio|linebreaks }}</p>
+                    </div>
+                </div>
+            </a>
+        {% endwith %}
+   </div>
+</div>
+</div>
 
 
 {% endblock %}

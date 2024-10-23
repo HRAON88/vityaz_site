@@ -3,14 +3,12 @@ from django.core.cache import cache
 from django.db.models import Count
 from .models import *
 
-
-
 menu = [
-        {'title': 'Расписание', 'url_name': 'schedule'},
-        {'title': 'Обратная связь', 'url_name': 'contact'},
-        {'title': 'Новости', 'url_name': 'news'}
-        ]
-
+    {'title': 'Расписание', 'url_name': 'schedule'},
+    {'title': 'Обратная связь', 'url_name': 'contact'},
+    {'title': 'Новости', 'url_name': 'news'},
+    {'title': 'Тренеры', 'url_name': '#trainers-section'},  # Добавлено
+]
 
 class DataMixin:
     paginate_by = 4

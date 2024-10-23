@@ -94,9 +94,11 @@ from .slider_data import get_slider_data
 
 
 class ClubMainMenu(DataMixin, ListView):
+    paginate_by = 7
     template_name = 'club/mainmenu1.html'
-    context_object_name = 'menu'
+    context_object_name = 'coaches'
     model = Coach
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -116,6 +118,9 @@ class ClubMainMenu(DataMixin, ListView):
 
         c_def = self.get_user_context(title='Главная страница')
         return dict(list(context.items()) + list(c_def.items()))
+
+    def get_queryset(self):
+        return self.model.objects.all().order_by('ordering', 'fio')
 
     def post(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()
