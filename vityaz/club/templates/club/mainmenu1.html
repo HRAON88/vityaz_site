@@ -1,26 +1,6 @@
 {% extends 'club/base.html' %}
 {% block content %}
 {% load static %}
-<style>
-    .artboard-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background-color: #000000;
-    background-size: cover;
-}
-
-.artboard-element {
-    position: absolute;
-    box-sizing: border-box;
-    display: table;
-    width: 100%;
-    height: auto;
-    background-size: cover;
-    background-position: center;
-}
-</style>
 
 <div class="artboard-container-main">
     <div class="artboard-element image-element" data-id="1"></div>
@@ -30,7 +10,7 @@
     <div class="logo-image"></div>
 
     <div class="button-container">
-        <button class="custom-button" onclick="openForm('trial')">Записаться на пробное занятие</button>
+        <button class="custom-button" onclick="openForm('trial', 'sambo')">Записаться на пробное занятие</button>
         <button class="custom-button second-button" onclick="openForm('callback')">Заказать звонок</button>
     </div>
 
@@ -38,8 +18,7 @@
     <div class="success-message">{{ message_success }}</div>
     {% endif %}
 
-    <div id="overlay" class="overlay" onclick="closeForm()"></div>
-
+     <div id="overlay" class="overlay" onclick="closeForm()"></div>
     <div id="trial-form-popup" class="form-popup {% if trial_form.errors %}visible{% endif %}">
         <span class="close-button" onclick="closeForm()">&times;</span>
         <form method="post" class="form-container" id="trial-form">
@@ -48,7 +27,15 @@
             {% for field in trial_form %}
                 <div class="form-group">
                     {{ field.label_tag }}
-                    {{ field }}
+                    {% if field.name == 'sport' %}
+                        <select id="sport-select" name="{{ field.name }}">
+                            {% for choice in field.field.choices %}
+                                <option value="{{ choice.0 }}" {% if choice.0 == field.value %}selected{% endif %}>{{ choice.1 }}</option>
+                            {% endfor %}
+                        </select>
+                    {% else %}
+                        {{ field }}
+                    {% endif %}
                     {% if field.errors %}
                         <div class="error">{{ field.errors }}</div>
                     {% endif %}
@@ -210,7 +197,15 @@
            <div class="swiper-slide">
                <img src="{% static 'club/images/karate.jpg' %}" alt="Каратэ">
                <p>Подробная информация о тренировках по каратэ...</p>
+           </div><div class="swiper-slide">
+               <img src="{% static 'club/images/karate.jpg' %}" alt="Каратэ">
+               <p>Подробная информация о тренировках по каратэ...</p>
            </div>
+           <div class="swiper-slide">
+               <img src="{% static 'club/images/karate.jpg' %}" alt="Каратэ">
+               <p>Подробная информация о тренировках по каратэ...</p>
+           </div>
+
            <!-- Добавьте больше слайдов, если нужно -->
        </div>
        <div class="swiper-button-next"></div>
@@ -225,6 +220,14 @@
                <img src="{% static 'club/images/thekvando.jpg' %}" alt="Тхэквондо">
                <p>Подробная информация о тренировках по тхэквондо...</p>
            </div>
+            <div class="swiper-slide">
+               <img src="{% static 'club/images/thekvando.jpg' %}" alt="Тхэквондо">
+               <p>Подробная информация о тренировках по тхэквондо...</p>
+           </div>
+            <div class="swiper-slide">
+               <img src="{% static 'club/images/thekvando.jpg' %}" alt="Тхэквондо">
+               <p>Подробная информация о тренировках по тхэквондо...</p>
+           </div>
            <!-- Добавьте больше слайдов, если нужно -->
        </div>
        <div class="swiper-button-next"></div>
@@ -235,6 +238,14 @@
         <!-- Слайдер для самбо -->
    <div id="samboSlider" class="swiper-container" style="display: none;">
        <div class="swiper-wrapper">
+           <div class="swiper-slide">
+               <img src="{% static 'club/images/sambo.jpg' %}" alt="самбо">
+               <p>Подробная информация о тренировках по самбо...</p>
+           </div>
+           <div class="swiper-slide">
+               <img src="{% static 'club/images/sambo.jpg' %}" alt="самбо">
+               <p>Подробная информация о тренировках по самбо...</p>
+           </div>
            <div class="swiper-slide">
                <img src="{% static 'club/images/sambo.jpg' %}" alt="самбо">
                <p>Подробная информация о тренировках по самбо...</p>
@@ -282,7 +293,7 @@
                 <h2>АРАШИ КАРАТЕ</h2>
                 <p>Современное полноконтактное единоборство, включающее в себя всё самое лучшее и прогресивное из восточных и традиционных видов единоборств, таких как бокс, карате,
                     муай тай (тайский бокс), дзюдо, самбо, вольная борьба,грэпплинг, айкидо и айкиджитсу.</p>
-                    <button class="custom-button-direction" onclick="openForm('trial')">Записаться на тренировку</button>
+                    <button class="custom-button-direction" onclick="openForm('trial', 'arashi_karate')">Записаться на тренировку</button>
                     <button id="karateDetailsButton" class="custom-button-direction">Подробнее</button>
             </div>
         </div>
@@ -293,7 +304,7 @@
                 <p>Корейское боевое искусство, особенностью которого является возможность использования в бою ног для ударов и бросков. В отличие от других корейских единоборств, в
                     тхэквондо не используют оружия, считается, что человеческое тело само по себе очень грозное оружие.</p>
                  <button id="techvandoDetailsButton" class="custom-button-direction">Подробнее</button>
-                 <button class="custom-button-direction" onclick="openForm('trial')">Записаться на тренировку</button>
+                 <button class="custom-button-direction" onclick="openForm('trial', 'taekwondo')">Записаться на тренировку</button>
             </div>
             <div class="image-wrapper">
                 <img src="{% static 'club/images/thekvando.jpg' %}" alt="ткэхвандо" class="training-image">

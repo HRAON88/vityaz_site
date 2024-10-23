@@ -1,10 +1,11 @@
 // Функция открытия формы
-function openForm(type) {
-    document.getElementById("overlay").style.display = "block";
-    if (type === 'trial') {
-        document.getElementById("trial-form-popup").style.display = "block";
-        document.getElementById("trial-form-popup").classList.add("visible");
-    } else if (type === 'callback') {
+    function openForm(type, sport) {
+        document.getElementById("overlay").style.display = "block";
+        if (type === 'trial') {
+            document.getElementById("trial-form-popup").style.display = "block";
+            document.getElementById("trial-form-popup").classList.add("visible");
+            document.getElementById("sport-select").value = sport; // Устанавливаем выбранный вид спорта
+        } else if (type === 'callback') {
         document.getElementById("callback-form-popup").style.display = "block";
         document.getElementById("callback-form-popup").classList.add("visible");
     }
