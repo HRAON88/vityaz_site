@@ -228,7 +228,11 @@
         </div>
     </div>
 </div>
-
+<style>
+            .h2{
+            margin: 0;
+            }
+        </style>
 
 <div id="trainers-section" class="artboard-container">
     <div class="artboard-element image-element" data-id="1"></div>
@@ -238,6 +242,8 @@
     <div class="artboard-element image-element" data-id="6"></div>
     <div class="artboard-element image-element" data-id="7"></div>
     <div class="features-section">
+
+        <h3>Наши Тренеры!</h3>
     <div class="row">
         {% for coach in coaches|slice:":2" %}
             <a href="{{ coach.photo.url }}" data-lightbox="coach-gallery-{{ coach.id }}" data-title="{{ coach.fio }}">

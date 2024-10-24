@@ -1,26 +1,48 @@
 {% extends 'club/base.html' %}
 {% block content %}
-<h1> {{title}}</h1>
-<ul>
-    {% for p in posts  %}
+<style>
+.custom-container {
+    padding-left: 30px; /* Отступ слева */
+    padding-right: 0px; /* Отступ справа */
+    margin: 20px; /* Убедитесь, что нет внешних отступов */
+    color: #000;
+    font-size: 20px;
+    font-family: Yandex Sans Display Light;
+}
 
-        <h2>{{p.title}}</h2>
-         {% if p.photos.exists %}
+.post-list {
+    list-style-type: none; /* Убираем маркеры списка */
+    padding: 0; /* Убираем отступы списка */
+    margin: 60px; /* Убираем внешние отступы */
+}
 
-            <p><img class="img-article-left thumb" src="{{p.photos.first.photo.url}}" style="width: 500px; height: auto;"></p>
-         {% endif %}
+.post-list li {
+    margin-bottom: 20px; /* Добавляем отступ между постами, если нужно */
+}
 
 
-        {% autoescape on%}
-        <p>{{p.content | linebreaks|truncatewords:15}}</p>
-        {% endautoescape %}
+</style>
+<div class="custom-container">
+    <h1>{{ title }}</h1>
+    <ul class="post-list">
+        {% for p in posts %}
+            <li>
+                <h2>{{ p.title }}</h2>
+                {% if p.photos.exists %}
+                    <p><img class="img-article-left thumb" src="{{ p.photos.first.photo.url }}" style="width: 500px; height: auto;"></p>
+                {% endif %}
+                {% autoescape on %}
+                <p>{{ p.content | linebreaks | truncatewords:15 }}</p>
+                {% endautoescape %}
+                <div class="clear"></div>
+                <div class="article-panel">
+                    <p class="first">Дата: {{ p.time_create|date:"d-m-Y" }}</p>
+                </div>
+                <p class="link-read-post"><a href="{{ p.get_absolute_url }}">Читать полностью</a></p>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
 
-        <div class="clear"></div>
-    <div class="article-panel">
-    <p class="first">Дата: {{p.time_create|date:"d-m-Y"}}</p>
-    </div>
-        <p class="link-read-post"><a href="{{p.get_absolute_url}}">Читать полностью</a></p>
 
-    {%endfor%}
-</ul>
 {% endblock %}

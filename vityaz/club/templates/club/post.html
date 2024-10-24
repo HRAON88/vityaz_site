@@ -7,9 +7,11 @@
         overflow: hidden;
         border: 0px solid #bf0f00;
         padding: 0px;
-        margin-top: auto;
-
+        margin-top: 20px;
+        margin-left: -50px; /* Отрицательный отступ слева, чтобы выйти за пределы custom-container */
+        margin-right: -50px; /* Отрицательный отступ справа */
     }
+
     .gallery {
         display: flex;
         transition: transform 0.5s ease;
@@ -22,6 +24,7 @@
         object-fit: cover; /* Обрезка изображения по центру */
         cursor: pointer; /* Курсор указывает на клик */
     }
+
     .nav-button {
         position: absolute;
         top: 50%;
@@ -30,39 +33,74 @@
         border: 2px solid #ccc;
         cursor: pointer;
         padding: 15px;
-        z-index: 10;
-
+        z-index: 3;
     }
+
     .prev {
         left: 10px;
     }
+
     .next {
         right: 10px;
+    }
+
+    .custom-container {
+        padding-left: 50px; /* Отступ слева */
+        padding-right: 50px; /* Отступ справа */
+        margin: 20px; /* Внешние отступы */
+        color: #000;
+        font-size: 20px;
+        font-family: Yandex Sans Display Light;
+    }
+
+    .custom-container h1 {
+        margin-bottom: 20px; /* Отступ снизу от заголовка */
+    }
+
+    .content-body {
+        margin-left: 40px; /* Отступ слева для смещения вправо */
+        margin-top: 40px; /* Отступ сверху для смещения ниже заголовка */
+    }
+
+    .img-article-left {
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 20px;/* Отступ снизу от изображения */
+        margin-right: 20px;
     }
 </style>
 
 
-<h1>{{ post.title }}</h1>
-{% if post.photos.exists %}
-<p><img class="img-article-left" src="{{ post.photos.first.photo.url }}" alt="{{ post.title }}"></p>
-{% endif %}
-<div class="container">
-{{ post.content|linebreaks }}
-</div>
-{% if post.photos.exists %}
-<div class="gallery-container">
-    <button class="nav-button prev" onclick="moveSlide(-1)">&#10094;</button>
-    <div class="gallery">
-        {% for p in post.photos.all %}
-            <a href="{{ p.photo.url }}" data-lightbox="{{ post.title }}" data-title="{{ post.title }}">
-                <img src="{{ p.photo.url }}" alt="Фото {{ forloop.counter }}">
-            </a>
-        {% endfor %}
+
+
+
+<div class="custom-container">
+    <h1>{{ post.title }}</h1>
+    <div class="content-body">
+        {% if post.photos.exists %}
+        <p><img class="img-article-left" src="{{ post.photos.first.photo.url }}" alt="{{ post.title }}"></p>
+        {% endif %}
+        <div class="container">
+            {{ post.content|linebreaks }}
+        </div>
     </div>
-    <button class="nav-button next" onclick="moveSlide(1)">&#10095;</button>
+    {% if post.photos.exists %}
+    <div class="gallery-container">
+        <button class="nav-button prev" onclick="moveSlide(-1)">&#10094;</button>
+        <div class="gallery">
+            {% for p in post.photos.all %}
+                <a href="{{ p.photo.url }}" data-lightbox="{{ post.title }}" data-title="{{ post.title }}">
+                    <img src="{{ p.photo.url }}" alt="Фото {{ forloop.counter }}">
+                </a>
+            {% endfor %}
+        </div>
+        <button class="nav-button next" onclick="moveSlide(1)">&#10095;</button>
+    </div>
+
+    <div class="page-info" id="page-info"></div>
+    {% endif %}
 </div>
 
-<div class="page-info" id="page-info"></div>
 
 
 <script>
@@ -94,5 +132,5 @@
 
     updateGallery();
 </script>
-{% endif %}
+
 {% endblock %}

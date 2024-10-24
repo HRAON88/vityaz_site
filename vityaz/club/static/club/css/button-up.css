@@ -3,20 +3,21 @@ html {
 }
 
 .btn-up {
-      position: fixed;
-      background-color: #673ab7;
-      right: 20px;
-      bottom: 0px;
-      border-top-left-radius: 8px;
-      border-top-right-radius: 8px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 60px;
-      height: 50px;
-      z-index: 5;
-    }
+    position: fixed;
+    background-color: #0000ff; /* Измененный цвет фона */
+    right: 20px;
+    bottom: 0px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 50px;
+    z-index: 8;
+}
+
 
 .btn-up::before {
       content: "";
@@ -32,8 +33,9 @@ html {
     }
 
 @media (hover: hover) and (pointer: fine) {
-      .btn-up:hover {
-        background-color: #512da8;
-      }
+    .btn-up:hover {
+        background-color: #202096; /* Новый цвет при наведении */
     }
+}
+
 
