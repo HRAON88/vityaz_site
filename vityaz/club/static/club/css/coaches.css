@@ -1,5 +1,5 @@
-
 .coach-card {
+    position: relative; /* Устанавливает контекст позиционирования для абсолютно позиционированных элементов внутри карточки */
     margin: 10px;
     width: 600px;
     height: 300px;
@@ -10,62 +10,72 @@
     box-sizing: border-box;
     z-index: 5;
     transition: transform 0.2s; /* Smooth transition for hover effect */
-    overflow: hidden; /* Ensure rounded corners effect */
+    overflow: visible; /* Позволяет содержимому выходить за пределы границ карточки */
     background-color: #fff; /* Set background color to white */
 }
 
 .coach-card:hover {
-    transform: scale(1.05); /* Slight enlargement on hover */
+    transform: scale(1.05); /* Легкое увеличение карточки при наведении курсора */
 }
 
 .coach-card img {
-    width: 50%; /* Half of the card */
-    height: 100%;
-    object-fit: cover; /* Ensure the image covers the entire image area */
+    width: 50%; /* Устанавливает ширину изображения на половину ширины карточки */
+    height: 100%; /* Устанавливает высоту изображения на полную высоту карточки */
+    object-fit: cover; /* Обеспечивает полное покрытие области изображения, сохраняя пропорции */
+    border-radius: 8px 0 0 8px; /* Закругляет верхний левый и нижний левый углы изображения */
+    overflow: hidden; /* Ограничивает содержимое границами изображения */
 }
 
 .coach-card div {
-    width: 50%; /* Half of the card */
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    color: #000; /* Set text color to black */
+    width: 50%; /* Устанавливает ширину текстового блока на половину карточки */
+    padding: 10px; /* Добавляет отступы внутри текстового блока */
+    display: flex; /* Устанавливает флексбокс для текстового блока */
+    flex-direction: column; /* Размещает элементы флексбокса вертикально */
+    justify-content: center; /* Центрирует содержимое по вертикали */
+    color: #000; /* Устанавливает черный цвет текста */
 }
 
 .coach-card h2 {
-    margin: 0 0 20px 0; /* Add bottom margin to create space below the title */
-    font-size: 1.8em; /* Increase the font size for fio */
-    color: #000; /* Set text color to black */
+    position: absolute; /* Абсолютное позиционирование для точного управления местоположением */
+    bottom: 0; /* Размещает элемент по нижнему краю карточки */
+    left: 0; /* Размещает элемент по левому краю карточки */
+    transform: translate(-10%, -60%); /* Сдвигает элемент немного за пределы карточки влево и поднимает вверх */
+    background-color: white; /* Устанавливает белый фон для текста ФИО */
+    color: black; /* Устанавливает черный цвет текста */
+    margin: 0; /* Убирает внешние отступы */
+    padding: 10px 20px; /* Добавляет внутренние отступы для создания визуального прямоугольника */
+    font-size: 1.2em; /* Устанавливает размер шрифта */
+    text-align: center; /* Центрирует текст по горизонтали */
+    box-shadow: 0px 3px 8px rgba(0,0,0,1.1); /* Добавляет легкую тень для улучшения видимости */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Добавляет тень к тексту */
+    z-index: 1; /* Устанавливает элемент выше других элементов на странице */
 }
 
 .coach-card p {
-    margin: 0;
-    color: #000; /* Set text color to black */
-    font-size: 1.0em;
-    line-height: 1.6;
-    font-weight: bold;
+    margin: 0; /* Убирает внешние отступы */
+    color: #000; /* Устанавливает черный цвет текста */
+    font-size: 1.0em; /* Устанавливает размер шрифта */
+    line-height: 1.6; /* Устанавливает межстрочный интервал */
+    font-weight: bold; /* Устанавливает жирное начертание шрифта */
 }
 
 .row {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-    margin-bottom: 20px;
+    display: flex; /* Устанавливает флексбокс для строки */
+    justify-content: space-around; /* Распределяет элементы внутри строки равномерно */
+    width: 100%; /* Устанавливает ширину строки на 100% */
+    margin-bottom: 20px; /* Добавляет нижний отступ */
 }
 
 .row:last-child {
-    justify-content: center;
+    justify-content: center; /* Центрирует содержимое последней строки */
 }
 
 a {
-    text-decoration: none; /* Remove underline from link */
-    color: inherit; /* Inherit text color */
+    text-decoration: none; /* Убирает подчеркивание у ссылок */
+    color: inherit; /* Наследует цвет текста */
 }
 
 a:hover, a:focus, a:active {
-    text-decoration: none; /* Ensure no underline on hover or focus */
-    color: inherit; /* Maintain inherited color */
+    text-decoration: none; /* Убирает подчеркивание при наведении, фокусе и активации */
+    color: inherit; /* Сохраняет наследуемый цвет текста */
 }
-
-

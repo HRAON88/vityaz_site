@@ -51,6 +51,7 @@ def pageNotFound(request, exception):
 
 
 class ShowPost(DataMixin, DetailView):
+    paginate_by = 6
     model = News
     template_name = 'club/post.html'
     pk_url_kwarg = 'id'
@@ -64,7 +65,7 @@ class ShowPost(DataMixin, DetailView):
 
 
 class ScheduleView(DataMixin, ListView):
-
+    paginate_by = 30
     model = Group
     template_name = 'club/schedule.html'
     context_object_name = 'schedules'
